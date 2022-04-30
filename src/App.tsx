@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import { Provider, useSelector } from 'react-redux';
+
+import { RootState, store, toggleTheme, useAppDispatch } from './redux/index'
 import './App.css';
 
+
 function App() {
+
+  const dispatch = useAppDispatch()
+  //  const [currentTheme, setCurrentTheme] = useState<Themes>('light')
+
+  const currentTheme = useSelector((state: RootState) => state.theme)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <Provider store={store}>
+
+      <div className="App">
+
+        <div style={{backgroundColor: currentTheme.backgroundColors.div}}> Hello World</div>
+        <button onClick={() => { dispatch(toggleTheme()) }}>
+          Change Theme
+        </button>
+
+
+      </div>
+
+
+
+    </Provider>
+
   );
 }
 
 export default App;
+
+
